@@ -15,7 +15,15 @@ app.get('/api/products', (req: Request, res: Response) => {
 })
 
 app.get('/api/products/:slug', (req: Request, res: Response) => {
-  res.json(sampleProducts.find((x) => x.slug === req.params.slug))
+  {
+    /* res.json(sampleProducts.find((x) => x.slug === req.params.slug)) */
+  }
+  const product = sampleProducts.find((x) => x.slug === req.params.slug)
+  if (product) {
+    res.json(product)
+  } else {
+    res.status(404).json({ message: 'Product Not Found' })
+  }
 })
 
 const PORT = 4000

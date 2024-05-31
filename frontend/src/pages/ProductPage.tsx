@@ -5,16 +5,12 @@ import LoadingBox from '../components/LoadingBox'
 import MessageBox from '../components/MessageBox'
 import { getError } from '../utils'
 import { ApiError } from '../types/ApiError'
-import {
-  Badge,
-  Button,
-  Card,
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Row,
-} from 'react-bootstrap'
+import { Badge, Button, Card, Col, ListGroup, Row } from 'react-bootstrap'
 import Rating from '../components/Rating'
+
+function isApiError(error: unknown): error is ApiError {
+  return (error as ApiError).message !== undefined
+}
 
 export default function ProductPage() {
   const params = useParams()
@@ -28,7 +24,9 @@ export default function ProductPage() {
   return isLoading ? (
     <LoadingBox />
   ) : error ? (
-    <MessageBox variant="danger">{getError(error as ApiError)}</MessageBox>
+    <MessageBox variant="danger">
+      {isApiError(error) ? getError(error) : 'An unexpected error occurred'}
+    </MessageBox>
   ) : !product ? (
     <MessageBox variant="danger">Product Not Found</MessageBox>
   ) : (
@@ -95,4 +93,3 @@ export default function ProductPage() {
     </div>
   )
 }
-export default ProductPage
