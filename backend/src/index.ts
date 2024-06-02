@@ -1,6 +1,21 @@
 import cors from 'cors'
-import express, { Request, Response } from 'express'
-import { sampleProducts } from './data'
+import express from 'express'
+import dotenv from 'dotenv'
+import mongoose from 'mongoose'
+import { productRouter } from './routers/productRouter'
+
+dotenv.config()
+const MONGODB_URI =
+  process.env.MONGODB_URI || 'mongodb://localhost/tsmernamazona'
+mongoose.set('strictQuery', true)
+mongoose
+  .connect(MONGODB_URI)
+  .then(() => {
+    console.log('connected to mongodb')
+  })
+  .catch(() => {
+    console.log('error mongodb')
+  })
 
 const app = express()
 app.use(
@@ -10,21 +25,7 @@ app.use(
   })
 )
 
-app.get('/api/products', (req: Request, res: Response) => {
-  res.json(sampleProducts)
-})
-
-app.get('/api/products/:slug', (req: Request, res: Response) => {
-  {
-    /* res.json(sampleProducts.find((x) => x.slug === req.params.slug)) */
-  }
-  const product = sampleProducts.find((x) => x.slug === req.params.slug)
-  if (product) {
-    res.json(product)
-  } else {
-    res.status(404).json({ message: 'Product Not Found' })
-  }
-})
+app.use('/api/products', productRouter)
 
 const PORT = 4000
 app.listen(PORT, () => {
