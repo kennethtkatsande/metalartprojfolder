@@ -25,7 +25,7 @@ function App() {
 
   return (
     <div className="d-flex flex-column vh-100">
-      <ToastContainer position='"bottom-centre"' limit={1} />
+      <ToastContainer position="bottom-center" limit={1} />
       <header>
         <Navbar expand="lg">
           <Container>

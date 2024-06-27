@@ -38,7 +38,7 @@ export default function ProductPage() {
     }
     dispatch({
       type: 'CART_ADD_ITEM',
-      payload: { ...convertProductToCartItem(product), quantity },
+      payload: { ...convertProductToCartItem(product!), quantity },
     })
     toast.success('Product added to the cart')
     navigate('/cart')
