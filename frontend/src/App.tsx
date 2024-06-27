@@ -1,7 +1,10 @@
 import { useContext, useEffect } from 'react'
 import { Container, Navbar, Nav, Button, Badge } from 'react-bootstrap'
 import { Link, Outlet } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Store } from './Store'
+import { LinkContainer } from 'react-router-bootstrap'
 {
   /* import { sampleProducts } from './data' */
 }
@@ -22,10 +25,13 @@ function App() {
 
   return (
     <div className="d-flex flex-column vh-100">
+      <ToastContainer position='"bottom-centre"' limit={1} />
       <header>
         <Navbar expand="lg">
           <Container>
-            <Navbar.Brand>tsamazona</Navbar.Brand>
+            <LinkContainer to="/">
+              <Navbar.Brand>tsamazona</Navbar.Brand>
+            </LinkContainer>
           </Container>
           <Nav>
             <Button variant={mode} onClick={switchModeHandler}>
